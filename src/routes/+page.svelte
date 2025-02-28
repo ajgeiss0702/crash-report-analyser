@@ -8,7 +8,7 @@
     let report = $state("");
     // let report = $state(dev ? testReport : "");
 
-    const from = page.url.searchParams.get("from");
+    const from = browser ? page.url.searchParams.get("from") : null;
     if(browser && from) {
         fetch(from)
             .then(t => t.text())
