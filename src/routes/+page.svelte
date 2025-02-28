@@ -2,10 +2,18 @@
 	import {testReport} from "$lib/test";
     import {getPrefixes} from "$lib";
     import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
-    import {dev} from "$app/environment";
+    import {browser, dev} from "$app/environment";
+    import {page} from "$app/state";
 
-    // let report = $state("");
-    let report = $state(dev ? testReport : "");
+    let report = $state("");
+    // let report = $state(dev ? testReport : "");
+
+    const from = page.url.searchParams.get("from");
+    if(browser && from) {
+        fetch(from)
+            .then(t => t.text())
+            .then(t => report = t)
+    }
 
     let filteredReport = $derived(
         report
